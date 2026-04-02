@@ -31,6 +31,14 @@ function cmd.problems(options)
 end
 
 ---@param cb? function
+function cmd.browser_login(cb)
+    local browser_auth = require("leetcode.auth")
+    browser_auth.login(function(success)
+        pcall(cb, success)
+    end)
+end
+
+---@param cb? function
 function cmd.cookie_prompt(cb)
     local cookie = require("leetcode.cache.cookie")
 
@@ -646,6 +654,7 @@ cmd.commands = {
     },
     cookie = {
         update = { cmd.cookie_prompt },
+        browser = { cmd.browser_login },
         delete = { cmd.sign_out },
     },
     cache = {

@@ -17,4 +17,8 @@ urls.latest_submission = "/submissions/latest/?qid=%s&lang=%s"
 urls.streak_counter = "/graphql/"
 urls.session = "/session/"
 
+-- Browser OAuth login: the path segment is the redirect protocol; "http"
+-- causes LeetCode to redirect back to http://localhost:<port>?cookie=<value>.
+urls.authorize_login = "/authorize-login/http/?path=localhost:%d"
+
 return urls
