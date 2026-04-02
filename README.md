@@ -8,9 +8,16 @@
 
 </div>
 
+> **This is a fork of [kawre/leetcode.nvim](https://github.com/kawre/leetcode.nvim).**
+> The primary addition is **browser-based login**: sign in by visiting leetcode.com
+> normally in your browser — no copying cookies manually. The original cookie
+> paste flow is still available as a fallback.
+
 https://github.com/kawre/leetcode.nvim/assets/69250723/aee6584c-e099-4409-b114-123cb32b7563
 
 ## ✨ Features
+
+- 🌐 **browser login** — sign in directly through leetcode.com; no cookie wrangling required
 
 - 📌 an intuitive dashboard for effortless navigation within [leetcode.nvim]
 
@@ -400,7 +407,9 @@ image_support = false,
   - `stats` toggle description stats visibility
 
 - `cookie`
-  - `update` opens a prompt to enter a new cookie
+  - `browser` opens the system browser to sign in via leetcode.com *(recommended)*
+
+  - `update` opens a prompt to paste a session cookie manually
 
   - `delete` deletes stored cookie and logs out of [leetcode.nvim]
 
@@ -438,6 +447,18 @@ This plugin can be initiated in two ways:
   To bypass this requirement use [`non_standalone`](#non-standalone-mode) plugin.
 
 ### Sign In
+
+#### Browser login (recommended)
+
+Press `b` on the sign-in screen (or run `:Leet cookie browser`). Your default
+browser will open leetcode.com — log in as normal, and you will be redirected
+back automatically. Neovim confirms the session and takes you straight to the
+menu.
+
+#### Cookie paste (fallback)
+
+If browser login is unavailable, press `s` on the sign-in screen (or run
+`:Leet cookie update`) to paste a session cookie manually.
 
 > [!WARNING]
 > Be sure to copy the `Cookie` from request headers, not the `set-cookie` from
