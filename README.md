@@ -51,7 +51,7 @@ https://github.com/kawre/leetcode.nvim/assets/69250723/aee6584c-e099-4409-b114-1
 
 ```lua
 {
-    "kawre/leetcode.nvim",
+    "laughp/leetcode.nvim",
     build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
     dependencies = {
         -- include a picker of your choice, see picker section for more details
@@ -511,7 +511,7 @@ For example, Rust needs extra configuration — see [this issue](https://github.
 
   ```lua
   {
-      "kawre/leetcode.nvim",
+      "laughp/leetcode.nvim",
       lazy = leet_arg ~= vim.fn.argv(0, -1),
       opts = { arg = leet_arg },
   }
@@ -521,7 +521,7 @@ For example, Rust needs extra configuration — see [this issue](https://github.
 
   ```lua
   {
-      "kawre/leetcode.nvim",
+      "laughp/leetcode.nvim",
       cmd = "Leet",
   }
   ```
@@ -556,7 +556,7 @@ You can then exit [leetcode.nvim] using `:Leet exit` command
 [lazy.nvim]: https://github.com/folke/lazy.nvim
 [leetcode]: https://leetcode.com
 [leetcode.cn]: https://leetcode.cn
-[leetcode.nvim]: https://github.com/kawre/leetcode.nvim
+[leetcode.nvim]: https://github.com/laughp/leetcode.nvim
 [neovim]: https://github.com/neovim/neovim
 [nerd-font]: https://www.nerdfonts.com
 [nui.nvim]: https://github.com/MunifTanjim/nui.nvim
