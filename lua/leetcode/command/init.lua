@@ -230,6 +230,22 @@ function cmd.change_lang()
     end
 end
 
+function cmd.timer_toggle()
+    local utils = require("leetcode.utils")
+    local q = utils.curr_question()
+    if q and q.timer then
+        q.timer:toggle()
+    end
+end
+
+function cmd.timer_reset()
+    local utils = require("leetcode.utils")
+    local q = utils.curr_question()
+    if q and q.timer then
+        q.timer:reset()
+    end
+end
+
 function cmd.desc_toggle()
     local utils = require("leetcode.utils")
     local q = utils.curr_question()
@@ -651,6 +667,12 @@ cmd.commands = {
 
         stats = { cmd.desc_toggle_stats },
         toggle = { cmd.desc_toggle },
+    },
+    timer = {
+        cmd.timer_toggle,
+
+        toggle = { cmd.timer_toggle },
+        reset = { cmd.timer_reset },
     },
     cookie = {
         update = { cmd.cookie_prompt },

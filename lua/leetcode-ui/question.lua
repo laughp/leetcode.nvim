@@ -8,6 +8,7 @@ local utils = require("leetcode.utils")
 local ui_utils = require("leetcode-ui.utils")
 local config = require("leetcode.config")
 local log = require("leetcode.logger")
+local Timer = require("leetcode.timer")
 
 ---@alias lc.editor.section "imports" | "code"
 
@@ -20,6 +21,7 @@ local log = require("leetcode.logger")
 ---@field lang string
 ---@field cache lc.cache.Question
 ---@field reset boolean
+---@field timer lc.Timer
 local Question = Object("LeetQuestion")
 
 ---@param raw? boolean
@@ -265,12 +267,51 @@ function Question:injector(code)
     return table.concat(parts, ("\n"):rep(gap))
 end
 
+---@private
+function Question:_update_winbar()
+    if not (self.winid and vim.api.nvim_win_is_valid(self.winid)) then
+        return
+    end
+
+    local timer = self.timer
+    local icon = timer.running and " " or " "
+    local time_str = timer:format()
+    local hl_icon = timer.running and "%#leetcode_easy#" or "%#leetcode_alt#"
+    local hl_time = "%#leetcode_normal#"
+    local reset_hl = "%#Normal#"
+
+    local winbar = ("%s%s%s %s%s"):format(
+        hl_icon, icon, hl_time, time_str, reset_hl
+    )
+    vim.api.nvim_set_option_value("winbar", winbar, { win = self.winid })
+end
+
+---@private
+function Question:_setup_timer()
+    self.timer = Timer:new()
+
+    self.timer:on("tick", function()
+        self:_update_winbar()
+    end)
+
+    self.timer:on("state", function()
+        self:_update_winbar()
+    end)
+
+    self:_update_winbar()
+    self.timer:start()
+end
+
 function Question:_unmount()
     if vim.v.dying ~= 0 then
         return
     end
 
     vim.schedule(function()
+        if self.timer then
+            self.timer:stop()
+        end
+
         self.info:unmount()
         self.console:unmount()
         self.description:unmount()
@@ -314,6 +355,7 @@ function Question:handle_mount()
     table.insert(_Lc_state.questions, self)
 
     self:autocmds()
+    self:_setup_timer()
     utils.exec_hooks("question_enter", self)
 
     return self
